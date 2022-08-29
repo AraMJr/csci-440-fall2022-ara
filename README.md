@@ -28,7 +28,7 @@ standard `git pull` and `git push` commands.
 When you want to get an update from the public class repository you can run this command:
 
 ```
-$ git pull upstream master
+$ git pull upstream main
 ```
 
 ## Homeworks
