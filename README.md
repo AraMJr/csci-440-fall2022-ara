@@ -25,8 +25,8 @@ You can find the github repo url when you look at the repository in github.
 Next, you should add the class repository as an upstream git repo:
 
 ```bash
-$ cd csci-366-fall2022-private
-$ git remote add upstream https://github.com/msu/csci-366-fall2022.git
+$ cd csci-440-fall2022-private
+$ git remote add upstream https://github.com/msu/csci-440-fall2022.git
 $ git pull upstream main
 $ git push origin main
 ```
