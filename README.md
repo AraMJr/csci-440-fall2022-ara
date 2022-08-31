@@ -14,14 +14,6 @@ Please use the following steps to create a *private* copy of this repo for your 
     - Select `Private`
     - Navigate to the `Settings` -> `Manage Access` section
     - Add `1cg` as a collaborator
-- Now run the following git commands, substituting your Github user name and NetID where required:
-```bash
-$ git clone https://github.com/msu/csci-440-fall2022.git csci-440-fall2022-private
-$ cd csci-440-fall2022-private
-$ git remote set-url origin git@github.com:<YOUR GITHUB USER NAME>/csci-440-fall2022-private.git
-$ git remote add upstream https://github.com/msu/csci-440-fall2022.git
-```
-
 Once your repository is initialized, you can pull it down to your local machine:
 
 ```bash
@@ -33,7 +25,8 @@ You can find the github repo url when you look at the repository in github.
 Next, you should add the class repository as an upstream git repo:
 
 ```bash
-$ git remote add upstream https://github.com/msu/csci-440-fall2022.git
+$ cd csci-366-fall2022-private
+$ git remote add upstream https://github.com/msu/csci-366-fall2022.git
 $ git pull upstream main
 $ git push origin main
 ```
