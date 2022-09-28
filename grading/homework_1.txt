@@ -27,8 +27,8 @@
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[ERROR] Tests run: 3, Failures: 2, Errors: 1, Skipped: 0, Time elapsed: 0.336 s <<< FAILURE! - in edu.montana.csci.csci440.homework.Homework1
-[ERROR] selectArtistsWhoseNameHasAnAInIt  Time elapsed: 0.327 s  <<< FAILURE!
+[ERROR] Tests run: 3, Failures: 2, Errors: 1, Skipped: 0, Time elapsed: 0.271 s <<< FAILURE! - in edu.montana.csci.csci440.homework.Homework1
+[ERROR] selectArtistsWhoseNameHasAnAInIt  Time elapsed: 0.261 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <211> but was: <275>
 	at edu.montana.csci.csci440.homework.Homework1.selectArtistsWhoseNameHasAnAInIt(Homework1.java:18)
 
@@ -56,8 +56,8 @@ org.opentest4j.AssertionFailedError: expected: <56> but was: <275>
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.318 s
-[INFO] Finished at: 2022-09-28T15:06:36-06:00
+[INFO] Total time:  1.243 s
+[INFO] Finished at: 2022-09-28T15:20:13-06:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_440_Project: There are test failures.
 [ERROR] 
