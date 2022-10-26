@@ -27,14 +27,14 @@
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[ERROR] Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.342 s <<< FAILURE! - in edu.montana.csci.csci440.homework.Homework2
-[ERROR] bulkInsertGenres  Time elapsed: 0.309 s  <<< ERROR!
+[ERROR] Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.417 s <<< FAILURE! - in edu.montana.csci.csci440.homework.Homework2
+[ERROR] bulkInsertGenres  Time elapsed: 0.378 s  <<< ERROR!
 java.lang.RuntimeException: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (incomplete input)
 	at edu.montana.csci.csci440.homework.Homework2.bulkInsertGenres(Homework2.java:74)
 Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (incomplete input)
 	at edu.montana.csci.csci440.homework.Homework2.bulkInsertGenres(Homework2.java:74)
 
-[ERROR] createGrammyInfoTable  Time elapsed: 0.002 s  <<< ERROR!
+[ERROR] createGrammyInfoTable  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (incomplete input)
 	at edu.montana.csci.csci440.homework.Homework2.createGrammyInfoTable(Homework2.java:49)
 Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (incomplete input)
@@ -52,8 +52,8 @@ Caused by: org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing datab
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.321 s
-[INFO] Finished at: 2022-10-26T16:38:33-06:00
+[INFO] Total time:  1.443 s
+[INFO] Finished at: 2022-10-26T17:38:23-06:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_440_Project: There are test failures.
 [ERROR] 
