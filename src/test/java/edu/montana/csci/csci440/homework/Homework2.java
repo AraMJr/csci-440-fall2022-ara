@@ -46,11 +46,27 @@ public class Homework2 extends DBTest {
      */
     public void createGrammyInfoTable(){
         //TODO fill these in
-        executeDDL("create table grammy_categories");
-        executeDDL("create table grammy_infos");
+        executeDDL("" +
+                "CREATE TABLE grammy_categories (" +
+                    "GrammyCategoryId int, " +
+                    "Name varchar(255), " +
+                    "PRIMARY KEY (GrammyCategoryId)); ");
+        executeDDL("" +
+                "CREATE TABLE grammy_infos (" +
+                    "GrammyId int, " +
+                    "ArtistId int, " +
+                    "AlbumId int, " +
+                    "TrackId int, " +
+                    "GrammyCategoryId int, " +
+                    "Status varchar(255), " +
+                    "PRIMARY KEY (GrammyId), " +
+                    "FOREIGN KEY (ArtistId) REFERENCES artists(ArtistId), " +
+                    "FOREIGN KEY (AlbumId) REFERENCES albums(AlbumId), " +
+                    "FOREIGN KEY (TrackId) REFERENCES tracks(TrackId), " +
+                    "FOREIGN KEY (GrammyCategoryId) REFERENCES grammy_categories(GrammyCategoryId)); ");
 
         // TEST CODE
-        executeUpdate("INSERT INTO grammy_categories(Name) VALUES ('Greatest Ever');");
+        executeUpdate("INSERT INTO grammy_categories(GrammyCategoryId, Name) VALUES (1, 'Greatest Ever');");
         Object categoryId = executeSQL("SELECT GrammyCategoryId FROM grammy_categories").get(0).get("GrammyCategoryId");
 
         executeUpdate("INSERT INTO grammy_infos(ArtistId, AlbumId, TrackId, GrammyCategoryId, Status) VALUES (1, 1, 1, " + categoryId + ",'Won');");
@@ -71,7 +87,14 @@ public class Homework2 extends DBTest {
         Integer before = (Integer) executeSQL("SELECT COUNT(*) as COUNT FROM genres").get(0).get("COUNT");
 
         //TODO fill this in
-        executeUpdate("INSERT");
+        executeUpdate("" +
+                "INSERT INTO genres (GenreId, Name) " +
+                "VALUES " +
+                    "('26', 'Games'), " +
+                    "('27', 'Sitcoms'), " +
+                    "('28', 'OSTs'), " +
+                    "('29', 'Popular'), " +
+                    "('30', 'Movies'); ");
 
         Integer after = (Integer) executeSQL("SELECT COUNT(*) as COUNT FROM genres").get(0).get("COUNT");
         assertEquals(before + 5, after);
