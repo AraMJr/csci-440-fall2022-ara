@@ -39,9 +39,9 @@ public class Homework3 extends DBTest {
             subtract.execute();
 
             PreparedStatement add = connection.prepareStatement("TODO");
-            subtract.setLong(1, 0);
-            subtract.setLong(2, 0);
-            subtract.execute();
+            add.setLong(1, 0);
+            add.setLong(2, 0);
+            add.execute();
 
             // commit with the connection
         }
