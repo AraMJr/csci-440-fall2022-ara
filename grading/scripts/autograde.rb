@@ -1,4 +1,4 @@
-#!/home/carson/.rvm/rubies/ruby-2.6.2/bin/ruby -w
+#!ruby
 
 require 'octokit'
 require 'csv'

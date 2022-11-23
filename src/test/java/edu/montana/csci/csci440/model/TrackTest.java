@@ -139,7 +139,7 @@ public class TrackTest extends DBTest {
         assertEquals(8, tracks.size());
 
         tracks = Track.advancedSearch(1, 1000, "a", 1, 1, null, null);
-        assertEquals(8, tracks.size());
+        assertEquals(4, tracks.size());
 
         tracks = Track.advancedSearch(1, 1000, "a", 1, 1, 280000, null);
         assertEquals(3, tracks.size());
