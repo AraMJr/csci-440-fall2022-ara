@@ -9,18 +9,14 @@
 [INFO] Copying 33 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ CSCI_440_Project ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Compiling 23 source files to /Users/carson/Projects/msu/demo/csci-440-fall2022-private/grading/scripts/repos/ara_megerdichian/target/classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ CSCI_440_Project ---
 [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 [INFO] Copying 3 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ CSCI_440_Project ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Compiling 17 source files to /Users/carson/Projects/msu/demo/csci-440-fall2022-private/grading/scripts/repos/ara_megerdichian/target/test-classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.1:test (default-test) @ CSCI_440_Project ---
 [INFO] 
@@ -34,18 +30,18 @@ Resetting DB After Test...
 No redis found to reset
 Resetting DB After Test...
 No redis found to reset
-[ERROR] Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.207 s <<< FAILURE! - in edu.montana.csci.csci440.homework.Homework3
-[ERROR] useATransactionToSafelyMoveMillisecondsFromOneTrackToAnother  Time elapsed: 0.2 s  <<< ERROR!
+[ERROR] Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 1.61 s <<< FAILURE! - in edu.montana.csci.csci440.homework.Homework3
+[ERROR] useATransactionToSafelyMoveMillisecondsFromOneTrackToAnother  Time elapsed: 1.6 s  <<< ERROR!
 org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (near "TODO": syntax error)
 	at edu.montana.csci.csci440.homework.Homework3.useATransactionToSafelyMoveMillisecondsFromOneTrackToAnother(Homework3.java:36)
 
-[ERROR] selectPopularTracksAndTheirAlbums  Time elapsed: 0.002 s  <<< ERROR!
+[ERROR] selectPopularTracksAndTheirAlbums  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: java.sql.SQLException: The prepared statement has been finalized
 	at edu.montana.csci.csci440.homework.Homework3.selectPopularTracksAndTheirAlbums(Homework3.java:69)
 Caused by: java.sql.SQLException: The prepared statement has been finalized
 	at edu.montana.csci.csci440.homework.Homework3.selectPopularTracksAndTheirAlbums(Homework3.java:69)
 
-[ERROR] selectCustomersMeetingCriteria  Time elapsed: 0.002 s  <<< ERROR!
+[ERROR] selectCustomersMeetingCriteria  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: java.sql.SQLException: The prepared statement has been finalized
 	at edu.montana.csci.csci440.homework.Homework3.selectCustomersMeetingCriteria(Homework3.java:87)
 Caused by: java.sql.SQLException: The prepared statement has been finalized
@@ -64,8 +60,8 @@ Caused by: java.sql.SQLException: The prepared statement has been finalized
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.060 s
-[INFO] Finished at: 2022-11-28T09:22:21-07:00
+[INFO] Total time:  2.750 s
+[INFO] Finished at: 2022-11-29T08:56:00-07:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_440_Project: There are test failures.
 [ERROR] 
