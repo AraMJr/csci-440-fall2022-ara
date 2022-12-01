@@ -42,8 +42,8 @@ public class EmployeeTest extends DBTest {
         assertNull(emp.getEmployeeId());
         emp.create();
         assertNotNull(emp.getEmployeeId());
-
-        assertEquals(Employee.find(1), emp.getBoss());
+        Employee boss = Employee.find(1);
+        assertEquals(boss, emp.getBoss());
     }
 
     @Test

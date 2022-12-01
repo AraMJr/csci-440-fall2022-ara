@@ -31,13 +31,35 @@ public class Employee extends Model {
     }
 
     public static List<Employee.SalesSummary> getSalesSummaries() {
-        //TODO - a GROUP BY query to determine the sales (look at the invoices table), using the SalesSummary class
-        return Collections.emptyList();
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT employees.FirstName, employees.LastName, employees.Email, " +
+                             "COUNT(invoices.Total) AS SalesCount, SUM(invoices.Total) AS SalesTotal " +
+                             "FROM employees " +
+                             "INNER JOIN customers ON employees.EmployeeId = customers.SupportRepId " +
+                             "INNER JOIN invoices on customers.CustomerId = invoices.CustomerId " +
+                             "GROUP BY employees.Email; "
+             )) {
+            ResultSet results = stmt.executeQuery();
+            List<Employee.SalesSummary> resultList = new LinkedList<>();
+            while (results.next()) {
+                resultList.add(new Employee.SalesSummary(results));
+            }
+            return resultList;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
     }
 
     @Override
     public boolean verify() {
         _errors.clear(); // clear any existing errors
+        if (email == null || "".equals(email)) {
+            addError("Email can't be null or blank!");
+        }
+        else if (!email.contains("@")) {
+            addError("Invalid email detected!");
+        }
         if (firstName == null || "".equals(firstName)) {
             addError("FirstName can't be null or blank!");
         }
@@ -151,8 +173,20 @@ public class Employee extends Model {
         }
     }
     public Employee getBoss() {
-        //TODO implement
-        return null;
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT * FROM employees WHERE EmployeeId=?"
+             )) {
+            stmt.setLong(1, this.getReportsTo());
+            ResultSet results = stmt.executeQuery();
+            if (results.next()) {
+                return new Employee(results);
+            } else {
+                return null;
+            }
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
     }
 
     public static List<Employee> all() {
@@ -162,9 +196,10 @@ public class Employee extends Model {
     public static List<Employee> all(int page, int count) {
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT * FROM employees LIMIT ?"
+                     "SELECT * FROM employees LIMIT ?, ?"
              )) {
-            stmt.setInt(1, count);
+            stmt.setInt(1, (page - 1) * count);
+            stmt.setInt(2, count);
             ResultSet results = stmt.executeQuery();
             List<Employee> resultList = new LinkedList<>();
             while (results.next()) {
@@ -177,7 +212,20 @@ public class Employee extends Model {
     }
 
     public static Employee findByEmail(String newEmailAddress) {
-        throw new UnsupportedOperationException("Implement me");
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT * FROM employees WHERE Email=?"
+             )) {
+            stmt.setString(1, newEmailAddress);
+            ResultSet results = stmt.executeQuery();
+            if (results.next()) {
+                return new Employee(results);
+            } else {
+                return null;
+            }
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
     }
 
     public static Employee find(long employeeId) {
@@ -200,7 +248,7 @@ public class Employee extends Model {
     }
 
     public void setReportsTo(Employee employee) {
-        // TODO implement
+        reportsTo = employee.getEmployeeId();
     }
 
     public static class SalesSummary {
