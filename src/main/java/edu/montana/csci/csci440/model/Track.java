@@ -1,6 +1,7 @@
 package edu.montana.csci.csci440.model;
 
 import edu.montana.csci.csci440.util.DB;
+import edu.montana.csci.csci440.util.Web;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 
@@ -267,5 +268,28 @@ public class Track extends Model {
             throw new RuntimeException(sqlException);
         }
     }
+    public static List<Track> getPlaylist(Long playlistId) {
+        int page = Web.getPage();
+        int count = Web.PAGE_SIZE;
 
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT * FROM tracks " +
+                             "INNER JOIN playlist_track ON tracks.TrackId = playlist_track.TrackId " +
+                             "INNER JOIN playlists ON playlist_track.PlaylistId = playlists.PlaylistId " +
+                             "WHERE playlistId = ? LIMIT ? OFFSET ?;"
+             )) {
+            stmt.setLong(1, playlistId);
+            stmt.setInt(2, count);
+            stmt.setInt(3, (page - 1) * count);
+            ResultSet results = stmt.executeQuery();
+            List<Track> resultList = new LinkedList<>();
+            while (results.next()) {
+                resultList.add(new Track(results));
+            }
+            return resultList;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
+    }
 }
