@@ -268,20 +268,16 @@ public class Track extends Model {
             throw new RuntimeException(sqlException);
         }
     }
-    public static List<Track> getPlaylist(Long playlistId) {
-        int page = Web.getPage();
-        int count = Web.PAGE_SIZE;
-
+    public static List<Track> forPlaylist(Long playlistId) {
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
                      "SELECT * FROM tracks " +
                              "INNER JOIN playlist_track ON tracks.TrackId = playlist_track.TrackId " +
                              "INNER JOIN playlists ON playlist_track.PlaylistId = playlists.PlaylistId " +
-                             "WHERE playlistId = ? LIMIT ? OFFSET ?;"
+                             "WHERE playlists.PlaylistId = ?" +
+                             "ORDER BY Name;"
              )) {
             stmt.setLong(1, playlistId);
-            stmt.setInt(2, count);
-            stmt.setInt(3, (page - 1) * count);
             ResultSet results = stmt.executeQuery();
             List<Track> resultList = new LinkedList<>();
             while (results.next()) {
