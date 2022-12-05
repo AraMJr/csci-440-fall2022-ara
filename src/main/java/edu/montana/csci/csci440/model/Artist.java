@@ -97,10 +97,10 @@ public class Artist extends Model {
     public static List<Artist> all(int page, int count) {
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT * FROM artists LIMIT ?, ?"
+                     "SELECT * FROM artists LIMIT ? OFFSET ?"
              )) {
-            stmt.setInt(1, (page - 1) * count);
-            stmt.setInt(2, count);
+            stmt.setInt(1, count);
+            stmt.setInt(2, (page - 1) * count);
             ResultSet results = stmt.executeQuery();
             List<Artist> resultList = new LinkedList<>();
             while (results.next()) {
