@@ -78,4 +78,25 @@ public class Playlist extends Model {
         }
     }
 
+    public static List<Playlist> forTracks(long trackId) {
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT * FROM playlists " +
+                             "INNER JOIN playlist_track ON playlist_track.PlaylistId = playlists.playlistId " +
+                             "INNER JOIN tracks ON tracks.TrackId = playlist_track.TrackId " +
+                             "WHERE playlist_track.TrackId = ?;"
+             )) {
+            stmt.setLong(1, trackId);
+            ResultSet results = stmt.executeQuery();
+            List<Playlist> resultList = new LinkedList<>();
+            while (results.next()) {
+                resultList.add(new Playlist(results));
+            }
+            return resultList;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
+
+    }
+
 }

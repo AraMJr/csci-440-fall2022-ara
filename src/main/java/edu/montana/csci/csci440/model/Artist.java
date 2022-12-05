@@ -15,6 +15,7 @@ public class Artist extends Model {
 
     Long artistId;
     String name;
+//    String DBname;
 
     public Artist() {
     }
@@ -22,6 +23,7 @@ public class Artist extends Model {
     private Artist(ResultSet results) throws SQLException {
         name = results.getString("Name");
         artistId = results.getLong("ArtistId");
+//        DBname = this.name;
     }
 
     public List<Album> getAlbums(){
@@ -41,6 +43,7 @@ public class Artist extends Model {
     }
 
     public void setName(String name) {
+//        this.DBname = this.name;
         this.name = name;
     }
 
@@ -76,6 +79,7 @@ public class Artist extends Model {
                          "UPDATE artists SET Name=? WHERE ArtistId=?")) {
                 stmt.setString(1, this.getName());
                 stmt.setLong(2, this.getArtistId());
+//                stmt.setString(3, this.DBname);
                 stmt.executeUpdate();
                 return true;
             } catch (SQLException sqlException) {
