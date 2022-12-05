@@ -264,9 +264,7 @@ public class Track extends Model {
     public static List<Track> all(int page, int count, String orderBy) {
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT tracks.Name, tracks.Milliseconds, tracks.Bytes, tracks.UnitPrice, tracks.TrackId, " +
-                             "tracks.AlbumId, tracks.MediaTypeId, tracks.GenreId, albums.AlbumId, albums.Title, " +
-                             "albums.ArtistId, artists.ArtistId, artists.Name " +
+                     "SELECT tracks.*, albums.Title, artists.Name " +
                              "FROM tracks, artists, albums " +
                              "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
                              "INNER JOIN artists ON albums.ArtistId = artists.AlbumId " +
