@@ -24,8 +24,7 @@ public class Playlist extends Model {
     }
 
 
-    public List<Track> getTracks(){
-        // TODO implement, order by track name
+    public List<Track> getTracks() {
         return Track.forPlaylist(getPlaylistId());
     }
 

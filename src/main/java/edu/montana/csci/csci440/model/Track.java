@@ -48,15 +48,21 @@ public class Track extends Model {
         albumId = results.getLong("AlbumId");
         mediaTypeId = results.getLong("MediaTypeId");
         genreId = results.getLong("GenreId");
-//        artist = results.getString("ArtistName");
-//        album = results.getString("AlbumTitle");
-        artist = this.getArtistName();
-        album = this.getAlbumTitle();
+        artist = results.getString("ArtistName");
+        album = results.getString("AlbumTitle");
+//        artist = this.getArtistName();
+//        album = this.getAlbumTitle();
     }
 
     public static Track find(long i) {
         try (Connection conn = DB.connect();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM tracks WHERE TrackId=?")) {
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT tracks.*, albums.Title AS AlbumTitle, artists.Name AS ArtistName " +
+                             "FROM tracks " +
+                             "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
+                             "INNER JOIN artists ON albums.ArtistId = artists.ArtistId " +
+                             "WHERE TrackId=?;"
+             )) {
             stmt.setLong(1, i);
             ResultSet results = stmt.executeQuery();
             if (results.next()) {
@@ -170,13 +176,13 @@ public class Track extends Model {
     public String getArtistName() {
         // TODO implement more efficiently
         //  hint: cache on this model object
-        return getAlbum().getArtist().getName();
+        return this.artist;
     }
 
     public String getAlbumTitle() {
         // TODO implement more efficiently
         //  hint: cache on this model object
-        return getAlbum().getTitle();
+        return this.album;
     }
 
     public static List<Track> advancedSearch(int page, int count,
@@ -219,7 +225,7 @@ public class Track extends Model {
     }
 
     public static List<Track> search(int page, int count, String orderBy, String search) {
-        String query = "SELECT * FROM tracks WHERE name LIKE ? LIMIT ?";
+        String query = "SELECT * FROM tracks WHERE name LIKE ? ORDER BY " + orderBy + " LIMIT ?";
         search = "%" + search + "%";
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -264,15 +270,14 @@ public class Track extends Model {
     public static List<Track> all(int page, int count, String orderBy) {
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT tracks.*, albums.Title, artists.Name " +
-                             "FROM tracks, artists, albums " +
+                     "SELECT tracks.*, albums.Title as AlbumTitle, artists.Name AS ArtistName " +
+                             "FROM tracks " +
                              "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
-                             "INNER JOIN artists ON albums.ArtistId = artists.AlbumId " +
-                             "ORDER BY ? LIMIT ? OFFSET ?;"
+                             "INNER JOIN artists ON albums.ArtistId = artists.ArtistId " +
+                             "ORDER BY " + orderBy + " LIMIT ? OFFSET ?;"
              )) {
-            stmt.setString(1, orderBy);
-            stmt.setInt(2, count);
-            stmt.setInt(3, (page - 1) * count);
+            stmt.setInt(1, count);
+            stmt.setInt(2, (page - 1) * count);
             ResultSet results = stmt.executeQuery();
             List<Track> resultList = new LinkedList<>();
             while (results.next()) {
@@ -301,9 +306,9 @@ public class Track extends Model {
         if (album == null || "".equals(album)) {
             addError("Album can't be null or blank!");
         }
-        if (artist == null || "".equals(artist)) {
-            addError("Artist can't be null or blank!");
-        }
+//        if (artist == null || "".equals(artist)) {
+//            addError("Artist can't be null or blank!");
+//        }
         return !hasErrors();
     }
 
@@ -336,7 +341,8 @@ public class Track extends Model {
         if (verify()) {
             try (Connection conn = DB.connect();
                  PreparedStatement stmt = conn.prepareStatement(
-                         "INSERT INTO tracks (Name, Milliseconds, Bytes, UnitPrice, AlbumId, MediaTypeId, GenreId) " +
+                         "INSERT INTO tracks " +
+                                 "(Name, Milliseconds, Bytes, UnitPrice, AlbumId, MediaTypeId, GenreId) " +
                                  "VALUES (?, ?, ?, ?, ?, ?, ?);")) {
                 stmt.setString(1, this.getName());
                 stmt.setLong(2, this.getMilliseconds());
@@ -370,7 +376,9 @@ public class Track extends Model {
     public static List<Track> forPlaylist(Long playlistId) {
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT * FROM tracks " +
+                     "SELECT tracks.*, albums.Title AS AlbumTitle, artists.Name AS ArtistName FROM tracks " +
+                             "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
+                             "INNER JOIN artists ON albums.ArtistId = artists.ArtistId " +
                              "INNER JOIN playlist_track ON tracks.TrackId = playlist_track.TrackId " +
                              "INNER JOIN playlists ON playlist_track.PlaylistId = playlists.PlaylistId " +
                              "WHERE playlists.PlaylistId = ?" +
