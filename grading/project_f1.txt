@@ -29,7 +29,7 @@
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.332 s - in edu.montana.csci.csci440.model.InvoicesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.449 s - in edu.montana.csci.csci440.model.InvoicesTest
 [INFO] Running edu.montana.csci.csci440.model.TrackTest
 Resetting DB After Test...
 Resetting DB After Test...
@@ -43,63 +43,19 @@ Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[ERROR] Tests run: 12, Failures: 7, Errors: 4, Skipped: 0, Time elapsed: 0.037 s <<< FAILURE! - in edu.montana.csci.csci440.model.TrackTest
-[ERROR] testAlbumNameIsStoredOnTrack  Time elapsed: 0 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <10> but was: <11>
-	at edu.montana.csci.csci440.model.TrackTest.testAlbumNameIsStoredOnTrack(TrackTest.java:96)
-
-[ERROR] testOrderByWorks  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <É Uma Partida De Futebol> but was: <For Those About To Rock (We Salute You)>
-	at edu.montana.csci.csci440.model.TrackTest.testOrderByWorks(TrackTest.java:102)
-
-[ERROR] testDeleteWorks  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.UnsupportedOperationException: Needs to be implemented
-	at edu.montana.csci.csci440.model.TrackTest.testDeleteWorks(TrackTest.java:50)
-
-[ERROR] testTrackListsWorks  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
-	at edu.montana.csci.csci440.model.TrackTest.testTrackListsWorks(TrackTest.java:108)
-
-[ERROR] testUpdateWorks  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.UnsupportedOperationException: Needs to be implemented
-	at edu.montana.csci.csci440.model.TrackTest.testUpdateWorks(TrackTest.java:77)
-
-[ERROR] testCreateWorks  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.UnsupportedOperationException: Needs to be implemented
-	at edu.montana.csci.csci440.model.TrackTest.testCreateWorks(TrackTest.java:36)
-
-[ERROR] advancedSearchTest  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <4> but was: <8>
-	at edu.montana.csci.csci440.model.TrackTest.advancedSearchTest(TrackTest.java:142)
-
-[ERROR] testValidationWorks  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.UnsupportedOperationException: Needs to be implemented
-	at edu.montana.csci.csci440.model.TrackTest.testValidationWorks(TrackTest.java:61)
-
-[ERROR] trackCountIsCachedInRedis  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <21> but was: <22>
-	at edu.montana.csci.csci440.model.TrackTest.trackCountIsCachedInRedis(TrackTest.java:120)
-
-[ERROR] testPagingWorks  Time elapsed: 0.008 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <503> but was: <1000>
-	at edu.montana.csci.csci440.model.TrackTest.testPagingWorks(TrackTest.java:24)
-
-[ERROR] testArtistNameIsStoredOnTrack  Time elapsed: 0.003 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <27> but was: <29>
-	at edu.montana.csci.csci440.model.TrackTest.testArtistNameIsStoredOnTrack(TrackTest.java:87)
-
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s - in edu.montana.csci.csci440.model.TrackTest
 [INFO] Running edu.montana.csci.csci440.model.PlaylistsTest
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in edu.montana.csci.csci440.model.PlaylistsTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in edu.montana.csci.csci440.model.PlaylistsTest
 [INFO] Running edu.montana.csci.csci440.model.AlbumTest
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s - in edu.montana.csci.csci440.model.AlbumTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s - in edu.montana.csci.csci440.model.AlbumTest
 [INFO] Running edu.montana.csci.csci440.model.EmployeeTest
 Resetting DB After Test...
 Resetting DB After Test...
@@ -108,7 +64,7 @@ Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s - in edu.montana.csci.csci440.model.EmployeeTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s - in edu.montana.csci.csci440.model.EmployeeTest
 [INFO] Running edu.montana.csci.csci440.model.ArtistTest
 Resetting DB After Test...
 Resetting DB After Test...
@@ -116,50 +72,20 @@ Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.031 s <<< FAILURE! - in edu.montana.csci.csci440.model.ArtistTest
-[ERROR] testOptimisticConcurrencyIsImplemented  Time elapsed: 0.004 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
-	at edu.montana.csci.csci440.model.ArtistTest.testOptimisticConcurrencyIsImplemented(ArtistTest.java:54)
-
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s - in edu.montana.csci.csci440.model.ArtistTest
 [INFO] Running edu.montana.csci.csci440.model.CustomerTest
 Resetting DB After Test...
 Resetting DB After Test...
 Resetting DB After Test...
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in edu.montana.csci.csci440.model.CustomerTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s - in edu.montana.csci.csci440.model.CustomerTest
 [INFO] 
 [INFO] Results:
 [INFO] 
-[ERROR] Failures: 
-[ERROR]   ArtistTest.testOptimisticConcurrencyIsImplemented:54 expected: <false> but was: <true>
-[ERROR]   TrackTest.advancedSearchTest:142 expected: <4> but was: <8>
-[ERROR]   TrackTest.testAlbumNameIsStoredOnTrack:96 expected: <10> but was: <11>
-[ERROR]   TrackTest.testArtistNameIsStoredOnTrack:87 expected: <27> but was: <29>
-[ERROR]   TrackTest.testOrderByWorks:102 expected: <É Uma Partida De Futebol> but was: <For Those About To Rock (We Salute You)>
-[ERROR]   TrackTest.testPagingWorks:24 expected: <503> but was: <1000>
-[ERROR]   TrackTest.testTrackListsWorks:108 expected: <3> but was: <0>
-[ERROR]   TrackTest.trackCountIsCachedInRedis:120 expected: <21> but was: <22>
-[ERROR] Errors: 
-[ERROR]   TrackTest.testCreateWorks:36 » UnsupportedOperation Needs to be implemented
-[ERROR]   TrackTest.testDeleteWorks:50 » UnsupportedOperation Needs to be implemented
-[ERROR]   TrackTest.testUpdateWorks:77 » UnsupportedOperation Needs to be implemented
-[ERROR]   TrackTest.testValidationWorks:61 » UnsupportedOperation Needs to be implemente...
-[INFO] 
-[ERROR] Tests run: 39, Failures: 8, Errors: 4, Skipped: 0
+[INFO] Tests run: 39, Failures: 0, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
+[INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.175 s
-[INFO] Finished at: 2022-12-02T15:56:50-07:00
+[INFO] Total time:  2.216 s
+[INFO] Finished at: 2022-12-06T10:31:40-07:00
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_440_Project: There are test failures.
-[ERROR] 
-[ERROR] Please refer to /Users/carson/Projects/msu/demo/csci-440-fall2022-private/grading/scripts/repos/ara_megerdichian/target/surefire-reports for the individual test results.
-[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
-[ERROR] -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
