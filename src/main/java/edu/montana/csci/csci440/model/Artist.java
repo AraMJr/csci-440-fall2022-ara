@@ -15,15 +15,14 @@ public class Artist extends Model {
 
     Long artistId;
     String name;
-//    String DBname;
-
+    String prevName;
     public Artist() {
     }
 
     private Artist(ResultSet results) throws SQLException {
         name = results.getString("Name");
         artistId = results.getLong("ArtistId");
-//        DBname = this.name;
+        prevName = name;
     }
 
     public List<Album> getAlbums(){
@@ -43,7 +42,7 @@ public class Artist extends Model {
     }
 
     public void setName(String name) {
-//        this.DBname = this.name;
+        this.prevName = this.name;
         this.name = name;
     }
 
@@ -76,18 +75,18 @@ public class Artist extends Model {
         if (verify()) {
             try (Connection conn = DB.connect();
                  PreparedStatement stmt = conn.prepareStatement(
-                         "UPDATE artists SET Name=? WHERE ArtistId=?")) {
+                         "UPDATE artists SET Name=? WHERE ArtistId=? AND Name=?;")) {
                 stmt.setString(1, this.getName());
                 stmt.setLong(2, this.getArtistId());
-//                stmt.setString(3, this.DBname);
-                stmt.executeUpdate();
-                return true;
+                stmt.setString(3, this.prevName);
+                if (stmt.executeUpdate() == 1) {
+                    return true;
+                }
             } catch (SQLException sqlException) {
                 throw new RuntimeException(sqlException);
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public static List<Artist> all() {

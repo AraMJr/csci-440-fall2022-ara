@@ -77,10 +77,15 @@ public class Track extends Model {
 
     public static Long count() {
         Jedis redisClient = new Jedis(); // use this class to access redis and create a cache
+        String cache = redisClient.get(REDIS_CACHE_KEY);
+        if (cache != null) {
+            return Long.parseLong(cache);
+        }
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) as Count FROM tracks")) {
             ResultSet results = stmt.executeQuery();
             if (results.next()) {
+                redisClient.set(REDIS_CACHE_KEY, String.valueOf(results.getLong("Count")));
                 return results.getLong("Count");
             } else {
                 throw new IllegalStateException("Should find a count!");
@@ -174,14 +179,10 @@ public class Track extends Model {
     }
 
     public String getArtistName() {
-        // TODO implement more efficiently
-        //  hint: cache on this model object
         return this.artist;
     }
 
     public String getAlbumTitle() {
-        // TODO implement more efficiently
-        //  hint: cache on this model object
         return this.album;
     }
 
@@ -306,19 +307,17 @@ public class Track extends Model {
         if (album == null || "".equals(album)) {
             addError("Album can't be null or blank!");
         }
-//        if (artist == null || "".equals(artist)) {
-//            addError("Artist can't be null or blank!");
-//        }
         return !hasErrors();
     }
 
     public boolean update() {
+        Jedis redisClient = new Jedis(); // use this class to access redis and create a cache
         if (verify()) {
             try (Connection conn = DB.connect();
                  PreparedStatement stmt = conn.prepareStatement(
                          "UPDATE tracks " +
                                  "SET Name=?, Milliseconds=?, Bytes=?, UnitPrice=?, AlbumId=?, MediaTypeId=?, GenreId=? " +
-                                 "WHERE TrackId=?")) {
+                                 "WHERE TrackId=?;")) {
                 stmt.setString(1, this.getName());
                 stmt.setLong(2, this.getMilliseconds());
                 stmt.setLong(3, this.getBytes());
@@ -328,6 +327,7 @@ public class Track extends Model {
                 stmt.setLong(7, this.getGenreId());
                 stmt.setLong(8, this.getTrackId());
                 stmt.executeUpdate();
+                redisClient.del(REDIS_CACHE_KEY);
                 return true;
             } catch (SQLException sqlException) {
                 throw new RuntimeException(sqlException);
@@ -338,6 +338,7 @@ public class Track extends Model {
     }
 
     public boolean create() {
+        Jedis redisClient = new Jedis(); // use this class to access redis and create a cache
         if (verify()) {
             try (Connection conn = DB.connect();
                  PreparedStatement stmt = conn.prepareStatement(
@@ -353,6 +354,7 @@ public class Track extends Model {
                 stmt.setLong(7, this.getGenreId());
                 stmt.executeUpdate();
                 trackId = DB.getLastID(conn);
+                redisClient.del(REDIS_CACHE_KEY);
                 return true;
             } catch (SQLException sqlException) {
                 throw new RuntimeException(sqlException);
@@ -363,11 +365,13 @@ public class Track extends Model {
     }
 
     public void delete() {
+        Jedis redisClient = new Jedis(); // use this class to access redis and create a cache
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(
                      "DELETE FROM tracks WHERE TrackId = ?;")) {
             stmt.setLong(1, this.getTrackId());
             stmt.executeUpdate();
+            redisClient.del(REDIS_CACHE_KEY);
         } catch (SQLException sqlException) {
             throw new RuntimeException(sqlException);
         }
