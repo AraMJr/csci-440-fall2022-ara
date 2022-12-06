@@ -191,15 +191,28 @@ public class Track extends Model {
                                              Integer maxRuntime, Integer minRuntime) {
         LinkedList<Object> args = new LinkedList<>();
 
-        String query = "SELECT * FROM tracks " +
-                "JOIN albums ON tracks.AlbumId = albums.AlbumId " +
-                "WHERE name LIKE ?";
+        String query = "SELECT tracks.*, albums.Title AS AlbumTitle, artists.Name AS ArtistName FROM tracks " +
+                "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
+                "INNER JOIN artists ON albums.ArtistId = artists.ArtistId " +
+                "WHERE tracks.Name LIKE ?";
         args.add("%" + search + "%");
 
         // Here is an example of how to conditionally
         if (artistId != null) {
-            query += " AND ArtistId=? ";
+            query += " AND artists.ArtistId=? ";
             args.add(artistId);
+        }
+        if (albumId != null) {
+            query += " AND albums.AlbumId=? ";
+            args.add(albumId);
+        }
+        if (maxRuntime != null) {
+            query += " AND tracks.Milliseconds < ? ";
+            args.add(maxRuntime);
+        }
+        if (minRuntime != null) {
+            query += " AND tracks.Milliseconds > ? ";
+            args.add(minRuntime);
         }
 
         //  include the limit (you should include the page too :)
