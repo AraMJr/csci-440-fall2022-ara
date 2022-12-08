@@ -1,5 +1,6 @@
 package edu.montana.csci.csci440.controller;
 
+import edu.montana.csci.csci440.model.Album;
 import edu.montana.csci.csci440.model.Artist;
 import edu.montana.csci.csci440.model.Track;
 import edu.montana.csci.csci440.util.Web;
@@ -20,6 +21,8 @@ public class TracksController {
         post("/tracks/new", (req, resp) -> {
             Track track = new Track();
             Web.putValuesInto(track, "Name", "Milliseconds", "Bytes", "UnitPrice");
+            String albumId = req.queryParams("AlbumId");
+            track.setAlbum(Album.find(Long.parseLong(albumId)));
             if (track.create()) {
                 Web.message("Created A Track!");
                 return Web.redirect("/tracks/" + track.getTrackId());
@@ -34,6 +37,9 @@ public class TracksController {
         get("/tracks", (req, resp) -> {
             String search = req.queryParams("q");
             String orderBy = req.queryParams("o");
+            if (orderBy == null) {
+                orderBy = "tracks.TrackId";
+            }
             List<Track> tracks;
             if (search != null) {
                 tracks = Track.search(Web.getPage(), Web.PAGE_SIZE, orderBy, search);

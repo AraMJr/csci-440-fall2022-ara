@@ -1,6 +1,7 @@
 package edu.montana.csci.csci440.model;
 
 import edu.montana.csci.csci440.util.DB;
+import redis.clients.jedis.Jedis;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,7 +63,7 @@ public class Album extends Model {
         if (title == null || "".equals(title)) {
             addError("Title can't be null or blank!");
         }
-        if (artistId == null || "".equals(artistId)) {
+        if (artistId == null) {
             addError("ArtistId can't be null!");
         }
         return !hasErrors();
@@ -101,6 +102,17 @@ public class Album extends Model {
             }
         } else {
             return false;
+        }
+    }
+
+    public void delete() {
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "DELETE FROM albums WHERE AlbumId = ?;")) {
+            stmt.setLong(1, this.getAlbumId());
+            stmt.executeUpdate();
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 

@@ -1,18 +1,13 @@
 package edu.montana.csci.csci440.model;
 
 import edu.montana.csci.csci440.util.DB;
-import edu.montana.csci.csci440.util.Web;
-import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,8 +21,8 @@ public class Track extends Model {
     private Long milliseconds;
     private Long bytes;
     private BigDecimal unitPrice;
-    private String artist;
-    private String album;
+    private String artistName;
+    private String albumTitle;
 
     public static final String REDIS_CACHE_KEY = "cs440-tracks-count-cache";
 
@@ -48,10 +43,8 @@ public class Track extends Model {
         albumId = results.getLong("AlbumId");
         mediaTypeId = results.getLong("MediaTypeId");
         genreId = results.getLong("GenreId");
-        artist = results.getString("ArtistName");
-        album = results.getString("AlbumTitle");
-//        artist = this.getArtistName();
-//        album = this.getAlbumTitle();
+        artistName = results.getString("ArtistName");
+        albumTitle = results.getString("AlbumTitle");
     }
 
     public static Track find(long i) {
@@ -158,7 +151,7 @@ public class Track extends Model {
     }
 
     public void setAlbum(Album album) {
-        this.album = album.getTitle();
+        this.albumTitle = album.getTitle();
         albumId = album.getAlbumId();
     }
 
@@ -179,11 +172,11 @@ public class Track extends Model {
     }
 
     public String getArtistName() {
-        return this.artist;
+        return this.artistName;
     }
 
     public String getAlbumTitle() {
-        return this.album;
+        return this.albumTitle;
     }
 
     public static List<Track> advancedSearch(int page, int count,
@@ -239,12 +232,17 @@ public class Track extends Model {
     }
 
     public static List<Track> search(int page, int count, String orderBy, String search) {
-        String query = "SELECT * FROM tracks WHERE name LIKE ? ORDER BY " + orderBy + " LIMIT ?";
+        String query = "SELECT tracks.*, albums.Title AS AlbumTitle, artists.Name AS ArtistName " +
+                "FROM tracks " +
+                "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
+                "INNER JOIN artists ON albums.ArtistId = artists.ArtistId " +
+                "WHERE tracks.Name LIKE ? ORDER BY " + orderBy + " LIMIT ? OFFSET ?";
         search = "%" + search + "%";
         try (Connection conn = DB.connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, search);
             stmt.setInt(2, count);
+            stmt.setInt(3, (page - 1) * count);
             ResultSet results = stmt.executeQuery();
             List<Track> resultList = new LinkedList<>();
             while (results.next()) {
@@ -317,7 +315,7 @@ public class Track extends Model {
         if (unitPrice == null) {
             addError("UnitPrice can't be null!");
         }
-        if (album == null || "".equals(album)) {
+        if (albumTitle == null || "".equals(albumTitle)) {
             addError("Album can't be null or blank!");
         }
         return !hasErrors();

@@ -33,10 +33,31 @@ public class Invoice extends Model {
         billingCity = results.getString("BillingCity");
     }
 
-    public List<InvoiceItem> getInvoiceItems(){
-        //TODO implement
-        return Collections.emptyList();
+    public List<InvoiceItem> getInvoiceItems() {
+        try (Connection conn = DB.connect();
+             PreparedStatement stmt = conn.prepareStatement(
+//                    , albums.Title AS AlbumTitle, artists.Name AS ArtistName
+                     "SELECT invoices.*, invoice_items.*, tracks.Name AS TrackName " +
+                             "FROM invoices " +
+                             "INNER JOIN invoice_items ON invoices.InvoiceId = invoice_items.InvoiceId " +
+                             "INNER JOIN tracks ON invoice_items.TrackId = tracks.TrackId " +
+//                             "INNER JOIN albums ON tracks.AlbumId = albums.AlbumId " +
+//                             "INNER JOIN artists ON albums.ArtistId = artists.ArtistId " +
+                             "WHERE invoices.InvoiceId = ? " +
+                             "ORDER BY invoice_items.InvoiceLineId;"
+             )) {
+            stmt.setLong(1, this.getInvoiceId());
+            ResultSet results = stmt.executeQuery();
+            List<InvoiceItem> resultList = new LinkedList<>();
+            while (results.next()) {
+                resultList.add(new InvoiceItem(results));
+            }
+            return resultList;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
     }
+
     public Customer getCustomer() {
         return null;
     }
