@@ -58,8 +58,8 @@
             <td>$!item.UnitPrice</td>
             <td>$!item.Quantity</td>
             <td>$!item.Track.Name</td>
-            <td>$!item.Track.Album</td>
-            <td>$!item.Track.Artist</td>
+            <td>$!item.Track.AlbumTitle</td>
+            <td>$!item.Track.ArtistName</td>
         </tr>
         #end
         $web.pagingWidget($invoice.InvoiceItems)
