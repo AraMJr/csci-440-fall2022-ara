@@ -1,6 +1,7 @@
 package edu.montana.csci.csci440.controller;
 
 import edu.montana.csci.csci440.helpers.EmployeeHelper;
+import edu.montana.csci.csci440.model.Customer;
 import edu.montana.csci.csci440.model.Employee;
 import edu.montana.csci.csci440.util.Web;
 
